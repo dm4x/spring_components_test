@@ -1,6 +1,9 @@
 package com.dm4x.components.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="versions")
@@ -15,7 +18,8 @@ public class Version {
     String name;
 
     @Column(name="creation_date")
-    String creationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime creationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="responsible_id")
@@ -24,7 +28,7 @@ public class Version {
     Version(){
     }
 
-    Version(String name, String creationDate){
+    Version(String name, LocalDateTime creationDate){
         this.name = name;
         this.creationDate = creationDate;
     }
@@ -45,11 +49,11 @@ public class Version {
         this.name = name;
     }
 
-    public String getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

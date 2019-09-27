@@ -1,9 +1,12 @@
 package com.dm4x.components.entity;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -20,8 +23,9 @@ public class Component {
     String name;
 
     @Column(name="creation_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
-    String creation_date;
+    LocalDateTime creation_date;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="responsible_id")
@@ -29,7 +33,7 @@ public class Component {
 
     public Component(){}
 
-    Component(String name, String creation_date){
+    Component(String name, LocalDateTime creation_date){
         this.name = name;
         this.creation_date = creation_date;
     }
@@ -50,11 +54,11 @@ public class Component {
         this.name = name;
     }
 
-    public String getCreation_date() {
+    public LocalDateTime getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(String creation_date) {
+    public void setCreation_date(LocalDateTime creation_date) {
         this.creation_date = creation_date;
     }
 
