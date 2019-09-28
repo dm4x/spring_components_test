@@ -1,0 +1,60 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.7.xsd">
+    <changeSet author="dm4x (generated)" id="1569602282677-1">
+        <createTable tableName="components">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="components_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="creation_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="responsible_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-2">
+        <createTable tableName="dependencies">
+            <column autoIncrement="true" name="record_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="dependencies_pkey"/>
+            </column>
+            <column name="component_id" type="INTEGER"/>
+            <column name="version_id" type="INTEGER"/>
+            <column name="depends_on_component" type="INTEGER"/>
+            <column name="depends_on_version" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-3">
+        <createTable tableName="responsibles">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="responsibles_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-4">
+        <createTable tableName="versions">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="versions_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="creation_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="responsible_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-5">
+        <addForeignKeyConstraint baseColumnNames="responsible_id" baseTableName="components" constraintName="components_responsible_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="responsibles" validate="true"/>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-6">
+        <addForeignKeyConstraint baseColumnNames="component_id" baseTableName="dependencies" constraintName="dependencies_component_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="components" validate="true"/>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-7">
+        <addForeignKeyConstraint baseColumnNames="depends_on_component" baseTableName="dependencies" constraintName="dependencies_depends_on_component_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="components" validate="true"/>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-8">
+        <addForeignKeyConstraint baseColumnNames="depends_on_version" baseTableName="dependencies" constraintName="dependencies_depends_on_version_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="versions" validate="true"/>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-9">
+        <addForeignKeyConstraint baseColumnNames="version_id" baseTableName="dependencies" constraintName="dependencies_version_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="versions" validate="true"/>
+    </changeSet>
+    <changeSet author="dm4x (generated)" id="1569602282677-10">
+        <addForeignKeyConstraint baseColumnNames="responsible_id" baseTableName="versions" constraintName="versions_responsible_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="responsibles" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

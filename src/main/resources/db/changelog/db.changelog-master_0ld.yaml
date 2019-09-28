@@ -1,0 +1,350 @@
+databaseChangeLog:
+  -logicalFilePath: db/changelog/db.changelog-1.yaml
+  -changeSet:
+    id: 1
+    author: kiselyov
+    changes:
+      -createTable:
+        tableName: responsibles
+        columns:
+          -column:
+            name: id
+            type: SERIAL
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: responsibles_pkey
+          -column:
+            name: name
+            type: VARCHAR(255)
+
+  -changeSet:
+    id: 2
+    author: kiselyov
+    changes:
+      -createTable:
+        tableName: versions
+        columns:
+          -column:
+            name: id
+            type: SERIAL
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: versions_pkey
+          -column:
+            name: name
+            type: VARCHAR(255)
+          -column:
+            name: creation_date
+            type: TIMESTAMP(29) WITHOUT TIME ZONE
+          -column:
+            name: responsible_id
+            type: INT
+
+  -changeSet:
+    id: 3
+    author: kiselyov
+    changes:
+      -createTable:
+        tableName: components
+        columns:
+          -column:
+            name: id
+            type: SERIAL
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: components_pkey
+          -column:
+            name: name
+            type: VARCHAR(255)
+          -column:
+            name: creation_date
+            type: TIMESTAMP(29) WITHOUT TIME ZONE
+          -column:
+            name: responsible_id
+            type: INT
+
+  -changeSet:
+    id: 4
+    author: kiselyov
+    changes:
+      -createTable:
+        tableName: dependencies
+        columns:
+          -column:
+            name: record_id
+            type: SERIAL
+            autoIncrement: true
+              constraints:
+                primaryKey: true
+                primaryKeyName: dependencies_pkey
+          -column:
+            name: component_id
+            type: INT
+          -column:
+            name: version_id
+            type: INT
+          -column:
+            name: depends_on_component
+            type: INT
+          -column:
+            name: depends_on_version
+            type: INT
+
+  -changeSet:
+    id: 5
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: responsible_id
+      baseTableName: components
+      constraintName: components_responsible_id_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: NO ACTION
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: responsibles
+
+  -changeSet:
+    id: 6
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: component_id
+      baseTableName: dependencies
+      constraintName: dependencies_component_id_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: NO ACTION
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: components
+
+  -changeSet:
+    id: 7
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: depends_on_component
+      baseTableName: dependencies
+      constraintName: dependencies_depends_on_component_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: NO ACTION
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: components
+
+  -changeSet:
+    id: 8
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: depends_on_version
+      baseTableName: dependencies
+      constraintName: dependencies_depends_on_version_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: SET NULL
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: versions
+
+  -changeSet:
+    id: 9
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: version_id
+      baseTableName: dependencies
+      constraintName: dependencies_version_id_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: SET NULL
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: versions
+
+  -changeSet:
+    id: 10
+    author: kiselyov
+    addForeignKeyConstraint:
+      baseColumnNames: responsible_id
+      baseTableName: versions
+      constraintName: versions_responsible_id_fkey
+      deferrable: false
+      initiallyDeferred: false
+      onDelete: NO ACTION
+      onUpdate: CASCADE
+      referencedColumnNames: id
+      referencedTableName: responsibles
+
+  -changeSet:
+    id: 11
+    author: kiselyov
+    changes:
+      -insert:
+        tableName: responsibles
+        columns:
+          -column:
+            name: name
+            value: "Иванов"
+      -insert:
+        tableName: responsibles
+        columns:
+          -column:
+            name: name
+            value: "Петров"
+      -insert:
+        tableName: responsibles
+        columns:
+          -column:
+            name: name
+            value: "Сидоров"
+
+    rollback:
+      -delete:
+        tableName: responsibles
+        where: id >= 0
+
+  -changeSet:
+    id: 12
+    author: kiselyov
+    changes:
+      -insert:
+        tableName: components
+        columns:
+          -column:
+            name: name
+            value: "WinForms"
+          -column:
+            name: "creation_date"
+            value: "2018-01-02 15:43:12"
+          -column:
+            name: "responsible"
+            value: "2"
+
+          -column:
+            name: name
+            value: "Controls"
+          -column:
+            name: "creation_date"
+            value: "2018-02-17 05:13:00"
+          -column:
+            name: "responsible"
+            value: "1"
+
+          -column:
+            name: name
+            value: "UserInterface"
+          -column:
+            name: "creation_date"
+            value: "2018-06-14 18:12:54"
+          -column:
+            name: "responsible"
+            value: "1"
+
+          -column:
+            name: name
+            value: "ApplicationServer"
+          -column:
+            name: "creation_date"
+            value: "2018-07-01 19:43:35"
+          -column:
+            name: "responsible"
+            value: "1"
+
+          -column:
+            name: name
+            value: "Data"
+          -column:
+            name: "creation_date"
+            value: "2018-07-25 12:16:28"
+          -column:
+            name: "responsible"
+            value: "3"
+
+          -column:
+            name: name
+            value: "Project1"
+          -column:
+            name: "creation_date"
+            value: "2018-10-14 16:13:00"
+          -column:
+            name: "responsible"
+            value: "2"
+
+          -column:
+            name: name
+            value: "Project2"
+          -column:
+            name: "creation_date"
+            value: "2018-11-14 23:19:07"
+          -column:
+            name: "responsible"
+            value: "1"
+
+          -column:
+            name: name
+            value: "Project3"
+          -column:
+            name: "creation_date"
+            value: "2019-02-15 14:23:54"
+          -column:
+            name: "responsible"
+            value: "2"
+
+          -column:
+            name: name
+            value: "Project4"
+          -column:
+            name: "creation_date"
+            value: "2019-06-14 13:12:11"
+          -column:
+            name: "responsible"
+            value: "3"
+
+  -changeSet:
+    id: 13
+    author: kiselyov
+    changes:
+      -insert:
+        tableName: versions
+        columns:
+          -column:
+            name: name
+            value: "1.0"
+          -column:
+            name: "creation_date"
+            value: "2018-01-02 15:43:12"
+          -column:
+            name: "responsible_id"
+            value: "1"
+
+          -column:
+            name: name
+            value: "1.1"
+          -column:
+            name: "creation_date"
+            value: "2018-02-17 05:13:12"
+          -column:
+            name: "responsible_id"
+            value: "2"
+
+          -column:
+            name: name
+            value: "2.0"
+          -column:
+            name: "creation_date"
+            value: "2018-06-14 18:12:54"
+          -column:
+            name: "responsible_id"
+            value: "2"
+
+          -column:
+            name: name
+            value: "2.1"
+          -column:
+            name: "creation_date"
+            value: "2019-01-02 13:19:07"
+          -column:
+            name: "responsible_id"
+            value: "3"
