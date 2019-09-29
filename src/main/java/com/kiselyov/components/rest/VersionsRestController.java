@@ -4,13 +4,14 @@ import com.kiselyov.components.entity.Version;
 import com.kiselyov.components.errorHandlers.VersionNotFoundException;
 import com.kiselyov.components.service.VersionService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Api
+@Api(value="VersionsController", description="Operations on versions")
 public class VersionsRestController {
     private VersionService versionService;
 
@@ -19,34 +20,34 @@ public class VersionsRestController {
         this.versionService = theVersionService;
     }
 
+    @ApiOperation(value = "View a list of available versions", response = Iterable.class)
     @GetMapping("/versions")
     public List<Version> findAll() {
         return versionService.findAll();
     }
 
+    @ApiOperation(value = "View version by id")
     @GetMapping("versions/{versionId}")
     public Version getVersion(@PathVariable int versionId) {
         return versionService.findById(versionId);
     }
 
-    // add mapping for POST /versions - add new version
+    @ApiOperation(value = "Add new version")
     @PostMapping("/versions")
     public Version addVersion(@RequestBody Version theVersion){
-        // this is to force a save of new item ... instead of update
         theVersion.setVersionId(0);
         versionService.save(theVersion);
-
         return theVersion;
     }
 
-    // add mapping for PUT /versinos - update existing version
+    @ApiOperation(value = "Update version")
     @PutMapping("/versions")
     public Version updateVersion(@RequestBody Version theVersion) {
         versionService.save(theVersion);
         return theVersion;
     }
 
-    // add mapping for DELETE /versions/{versionId} - delete version
+    @ApiOperation(value = "Delete version")
     @DeleteMapping("/versions/{versionId}")
     public String deleteVersion(@PathVariable int versionId) {
         Version tempVersion = versionService.findById(versionId);

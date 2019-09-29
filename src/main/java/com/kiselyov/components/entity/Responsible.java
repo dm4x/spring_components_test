@@ -1,5 +1,7 @@
 package com.kiselyov.components.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,9 +10,11 @@ public class Responsible {
 
     @Id
     @Column(name="id")
+    @ApiModelProperty(notes = "The database generated responsible ID", allowEmptyValue = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int responsibleId;
 
+    @ApiModelProperty(notes = "Responsible's name", allowEmptyValue = false)
     @Column(name="name")
     String name;
 

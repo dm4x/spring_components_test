@@ -1,11 +1,11 @@
 package com.kiselyov.components.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Table(name="components")
@@ -13,21 +13,31 @@ public class Component {
 
     @Id
     @Column(name="id")
+    @ApiModelProperty(notes = "The database generated component ID", allowEmptyValue = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int componentId;
 
+    @ApiModelProperty(notes = "Component's name", allowEmptyValue = false)
     @Column(name="name")
     @NotNull
     String name;
 
+    @ApiModelProperty(notes = "Component's creation date", allowEmptyValue = false)
     @Column(name="creation_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
     LocalDateTime creation_date;
 
+    @ApiModelProperty(notes = "Responsible for this version of component", allowEmptyValue = false)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="responsible_id")
     private Responsible responsible;
+
+    @ApiModelProperty(notes = "Component's version", allowEmptyValue = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="version_id")
+    private Version version;
+
 
     public Component(){}
 
@@ -68,4 +78,20 @@ public class Component {
         this.responsible = responsible;
     }
 
+    public Version getVersion() {
+        return version;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
+    }
+
+//    @Transactional
+//    @Query(nativeQuery = true,
+//            value = "SELECT depends_on_component, depends_on_version from dependencies where component_id = " +
+//                    ":component_id and version_id = :version_id")
+//    public List<Dependency> getDependencies(@Param("component_id") int component_id,
+//                                           @Param("version_id") int version_id){
+//
+//    }
 }

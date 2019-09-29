@@ -4,13 +4,14 @@ import com.kiselyov.components.entity.Component;
 import com.kiselyov.components.errorHandlers.ComponentNotFoundException;
 import com.kiselyov.components.service.ComponentService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Api(value="components", description="operations on components")
+@Api(value="ComponentsController", description="Operations on components")
 public class ComponentsRestController {
 
     private ComponentService componentService;
@@ -20,35 +21,35 @@ public class ComponentsRestController {
         this.componentService = theComponentService;
     }
 
+    @ApiOperation(value = "View a list of available components", response = Component.class)
     @GetMapping("/components")
     public List<Component> findAll() {
         return componentService.findAll();
     }
 
-    // add mapping for GET components/{componentId}
+    @ApiOperation(value = "View component by id")
     @GetMapping("components/{componentId}")
     public Component getComponent(@PathVariable int componentId) {
         return componentService.findById(componentId);
     }
 
-    // add mapping for POST /components - add new component
+    @ApiOperation(value = "Add new component")
     @PostMapping("/components")
     public Component addComponent(@RequestBody Component theComponent){
-        // this is to force a save of new item ... instead of update
         theComponent.setComponentId(0);
         componentService.save(theComponent);
 
         return theComponent;
     }
 
-    // add mapping for PUT /components - update existing components
+    @ApiOperation(value = "Update component")
     @PutMapping("/components")
     public Component updateComponent(@RequestBody Component theComponent) {
         componentService.save(theComponent);
         return theComponent;
     }
 
-    // add mapping for DELETE /components/{componentId} - delete component
+    @ApiOperation(value = "Delete component")
     @DeleteMapping("/components/{componentId}")
     public String deleteComponent(@PathVariable int componentId) {
         Component tempComponent = componentService.findById(componentId);
