@@ -23,40 +23,40 @@ public class VersionsRestController {
     @ApiOperation(value = "View a list of available versions", response = Iterable.class)
     @GetMapping("/versions")
     public List<Version> findAll() {
-        return versionService.findAll();
+        return versionService.findAllVersions();
     }
 
     @ApiOperation(value = "View version by id")
     @GetMapping("versions/{versionId}")
     public Version getVersion(@PathVariable int versionId) {
-        return versionService.findById(versionId);
+        return versionService.findVersionById(versionId);
     }
 
     @ApiOperation(value = "Add new version")
     @PostMapping("/versions")
     public Version addVersion(@RequestBody Version theVersion){
         theVersion.setVersionId(0);
-        versionService.save(theVersion);
+        versionService.saveVersion(theVersion);
         return theVersion;
     }
 
     @ApiOperation(value = "Update version")
     @PutMapping("/versions")
     public Version updateVersion(@RequestBody Version theVersion) {
-        versionService.save(theVersion);
+        versionService.saveVersion(theVersion);
         return theVersion;
     }
 
     @ApiOperation(value = "Delete version")
     @DeleteMapping("/versions/{versionId}")
     public String deleteVersion(@PathVariable int versionId) {
-        Version tempVersion = versionService.findById(versionId);
+        Version tempVersion = versionService.findVersionById(versionId);
 
         if(tempVersion == null) {
             throw new VersionNotFoundException();
         }
 
-        versionService.deleteById(versionId);
+        versionService.deleteVersionById(versionId);
         return "Deleted version id - " + versionId;
     }
 

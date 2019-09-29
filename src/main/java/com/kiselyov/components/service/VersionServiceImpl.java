@@ -3,6 +3,8 @@ package com.kiselyov.components.service;
 import com.kiselyov.components.DAO.VersionRepository;
 import com.kiselyov.components.entity.Version;
 import com.kiselyov.components.errorHandlers.VersionNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class VersionServiceImpl implements VersionService{
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private VersionRepository versionRepository;
 
     @Autowired
@@ -18,12 +22,14 @@ public class VersionServiceImpl implements VersionService{
         this.versionRepository = theVersionRepository;
     }
     @Override
-    public List<Version> findAll() {
+    public List<Version> findAllVersions() {
+        logger.debug("findAllVersions called");
         return versionRepository.findAll();
     }
 
     @Override
-    public Version findById(int theId) {
+    public Version findVersionById(int theId) {
+        logger.debug("findVersionById called");
         Optional<Version> result = versionRepository.findById(theId);
 
         Version theVersion = null;
@@ -39,12 +45,14 @@ public class VersionServiceImpl implements VersionService{
     }
 
     @Override
-    public void save(Version theVersion) {
+    public void saveVersion(Version theVersion) {
+        logger.debug("saveVersion called");
         versionRepository.save(theVersion);
     }
 
     @Override
-    public void deleteById(int theId) {
+    public void deleteVersionById(int theId) {
+        logger.debug("deleteVersionById called");
         versionRepository.deleteById(theId);
     }
 }

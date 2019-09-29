@@ -5,11 +5,11 @@ import com.kiselyov.components.entity.Component;
 import java.util.List;
 
 public interface ComponentService {
-    public List<Component> findAll();
+    List<Component> findAllComponents();
 
-    public Component findById(int theId);
+    Component findComponentById(int theId);
 
-    public void save(Component theComponent);
+    void saveComponent(Component theComponent);
 
-    public void deleteById(int theId);
+    void deleteComponentById(int theId);
 }

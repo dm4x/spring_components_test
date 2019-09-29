@@ -24,20 +24,20 @@ public class ComponentsRestController {
     @ApiOperation(value = "View a list of available components", response = Component.class)
     @GetMapping("/components")
     public List<Component> findAll() {
-        return componentService.findAll();
+        return componentService.findAllComponents();
     }
 
     @ApiOperation(value = "View component by id")
     @GetMapping("components/{componentId}")
     public Component getComponent(@PathVariable int componentId) {
-        return componentService.findById(componentId);
+        return componentService.findComponentById(componentId);
     }
 
     @ApiOperation(value = "Add new component")
     @PostMapping("/components")
     public Component addComponent(@RequestBody Component theComponent){
         theComponent.setComponentId(0);
-        componentService.save(theComponent);
+        componentService.saveComponent(theComponent);
 
         return theComponent;
     }
@@ -45,20 +45,20 @@ public class ComponentsRestController {
     @ApiOperation(value = "Update component")
     @PutMapping("/components")
     public Component updateComponent(@RequestBody Component theComponent) {
-        componentService.save(theComponent);
+        componentService.saveComponent(theComponent);
         return theComponent;
     }
 
     @ApiOperation(value = "Delete component")
     @DeleteMapping("/components/{componentId}")
     public String deleteComponent(@PathVariable int componentId) {
-        Component tempComponent = componentService.findById(componentId);
+        Component tempComponent = componentService.findComponentById(componentId);
 
         if(tempComponent == null) {
             throw new ComponentNotFoundException();
         }
 
-        componentService.deleteById(componentId);
+        componentService.deleteComponentById(componentId);
         return "Deleted component id - " + componentId;
     }
 

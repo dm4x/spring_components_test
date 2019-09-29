@@ -33,12 +33,6 @@ public class Component {
     @JoinColumn(name="responsible_id")
     private Responsible responsible;
 
-    @ApiModelProperty(notes = "Component's version", allowEmptyValue = false)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="version_id")
-    private Version version;
-
-
     public Component(){}
 
     Component(String name, LocalDateTime creation_date){
@@ -78,20 +72,4 @@ public class Component {
         this.responsible = responsible;
     }
 
-    public Version getVersion() {
-        return version;
-    }
-
-    public void setVersion(Version version) {
-        this.version = version;
-    }
-
-//    @Transactional
-//    @Query(nativeQuery = true,
-//            value = "SELECT depends_on_component, depends_on_version from dependencies where component_id = " +
-//                    ":component_id and version_id = :version_id")
-//    public List<Dependency> getDependencies(@Param("component_id") int component_id,
-//                                           @Param("version_id") int version_id){
-//
-//    }
 }

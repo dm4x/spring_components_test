@@ -24,13 +24,13 @@ public class ResponsiblesRestController {
     @ApiOperation(value = "View a list of available responsibles", response = Iterable.class)
     @GetMapping("/responsibles")
     public List<Responsible> findAll() {
-        return responsibleService.findAll();
+        return responsibleService.findAllResponsibles();
     }
 
     @ApiOperation(value = "View responsible by id")
     @GetMapping("responsibles/{responsibleId}")
     public Responsible getResponsible(@PathVariable int responsibleId) {
-        return responsibleService.findById(responsibleId);
+        return responsibleService.findResponsibleById(responsibleId);
     }
 
     @ApiOperation(value = "Add new responsible")
@@ -38,7 +38,7 @@ public class ResponsiblesRestController {
     public Responsible addResponsible(@RequestBody Responsible theResponsible){
         // this is to force a save of new item ... instead of update
         theResponsible.setResponsibleId(0);
-        responsibleService.save(theResponsible);
+        responsibleService.saveResponsible(theResponsible);
 
         return theResponsible;
     }
@@ -46,20 +46,20 @@ public class ResponsiblesRestController {
     @ApiOperation(value = "Update responsible")
     @PutMapping("/responsibles")
     public Responsible updateResponsible(@RequestBody Responsible theResponsible) {
-        responsibleService.save(theResponsible);
+        responsibleService.saveResponsible(theResponsible);
         return theResponsible;
     }
 
     @ApiOperation(value = "Delete responsible")
     @DeleteMapping("/responsibles/{responsibleId}")
     public String deleteResponsible(@PathVariable int responsibleId) {
-        Responsible tempResponsible = responsibleService.findById(responsibleId);
+        Responsible tempResponsible = responsibleService.findResponsibleById(responsibleId);
 
         if(tempResponsible == null) {
             throw new ResponsibleNotFoundException();
         }
 
-        responsibleService.deleteById(responsibleId);
+        responsibleService.deleteResponsibleById(responsibleId);
         return "Deleted responsible id - " + responsibleId;
     }
 }

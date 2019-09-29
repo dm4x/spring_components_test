@@ -3,6 +3,8 @@ package com.kiselyov.components.service;
 import com.kiselyov.components.DAO.ResponsibleRepository;
 import com.kiselyov.components.entity.Responsible;
 import com.kiselyov.components.errorHandlers.ResponsibleNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 @Service
 public class ResponsibleServiceImpl implements ResponsibleService{
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private ResponsibleRepository responsibleRepository;
 
     @Autowired
@@ -20,12 +24,14 @@ public class ResponsibleServiceImpl implements ResponsibleService{
     }
 
     @Override
-    public List<Responsible> findAll() {
+    public List<Responsible> findAllResponsibles() {
+        logger.debug("findAllResponsibles called");
         return responsibleRepository.findAll();
     }
 
     @Override
-    public Responsible findById(int theId) {
+    public Responsible findResponsibleById(int theId) {
+        logger.debug("findResponsibleById called");
         Optional<Responsible> result = responsibleRepository.findById(theId);
 
         Responsible theResponsible = null;
@@ -41,12 +47,14 @@ public class ResponsibleServiceImpl implements ResponsibleService{
     }
 
     @Override
-    public void save(Responsible theResponsible) {
+    public void saveResponsible(Responsible theResponsible) {
+        logger.debug("saveResponsible called");
         responsibleRepository.save(theResponsible);
     }
 
     @Override
-    public void deleteById(int theId) {
+    public void deleteResponsibleById(int theId) {
+        logger.debug("deleteResponsibleById called");
         responsibleRepository.deleteById(theId);
     }
 }

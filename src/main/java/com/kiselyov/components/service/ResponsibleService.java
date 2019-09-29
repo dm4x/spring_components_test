@@ -5,11 +5,11 @@ import com.kiselyov.components.entity.Responsible;
 import java.util.List;
 
 public interface ResponsibleService {
-    public List<Responsible> findAll();
+    List<Responsible> findAllResponsibles();
 
-    public Responsible findById(int theId);
+    Responsible findResponsibleById(int theId);
 
-    public void save(Responsible theResponsible);
+    void saveResponsible(Responsible theResponsible);
 
-    public void deleteById(int theId);
+    void deleteResponsibleById(int theId);
 }

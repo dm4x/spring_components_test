@@ -5,11 +5,11 @@ import com.kiselyov.components.entity.Version;
 import java.util.List;
 
 public interface VersionService {
-    public List<Version> findAll();
+    List<Version> findAllVersions();
 
-    public Version findById(int theId);
+    Version findVersionById(int theId);
 
-    public void save(Version theVersion);
+    void saveVersion(Version theVersion);
 
-    public void deleteById(int theId);
+    void deleteVersionById(int theId);
 }

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource(ignoreResourceNotFound = true, value = "classpath:../db.properties")
 @PropertySource(ignoreResourceNotFound = true, value = "file:${COMPONENTS_HOME}/db.properties")
 @PropertySource(ignoreResourceNotFound = true, value = "file:${user.home}/.myapp/db.properties")
 @ComponentScan("com.kiselyov")
